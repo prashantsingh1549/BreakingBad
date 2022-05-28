@@ -28,11 +28,12 @@ const App = () => {
             },
             headerRight: props => (
               <View style={{flexDirection: 'row'}}>
-                <TouchableOpacity
-                  onPress={() => console.log(navigation.navigate('Search'))}>
+                <TouchableOpacity onPress={() => navigation.navigate('Search')}>
                   <Image source={require('./src/assets/search1.png')} />
                 </TouchableOpacity>
-                <TouchableOpacity style={{marginLeft: 30}}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Favourites')}
+                  style={{marginLeft: 30}}>
                   <Image source={require('./src/assets/HEART_FILLED.png')} />
                 </TouchableOpacity>
               </View>
@@ -47,7 +48,6 @@ const App = () => {
             headerStyle: {
               backgroundColor: '#242424',
             },
-            statusBarHidden: true,
             headerBackVisible: false,
             headerTitleStyle: {
               color: '#fff',
@@ -59,13 +59,18 @@ const App = () => {
           component={Favourites}
           options={({navigation, route}) => ({
             headerStyle: {
-              backgroundColor: '#242424',
+              backgroundColor: '#000',
             },
-            statusBarHidden: true,
             headerBackVisible: false,
             headerTitleStyle: {
-              color: '#fff',
+              color: '#18CA75',
+              fontSize: 25,
             },
+            headerRight: props => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Image source={require('./src/assets/crossClear.png')} />
+              </TouchableOpacity>
+            ),
           })}
         />
         <Stack.Screen
@@ -74,9 +79,9 @@ const App = () => {
           options={({navigation, route}) => ({
             headerTitle: '',
             headerStyle: {
-              backgroundColor: '#242424',
+              backgroundColor: '#000',
             },
-            statusBarHidden: true,
+            headerTransparent: true,
             headerTintColor: '#fff',
             headerTitleStyle: {
               color: '#fff',

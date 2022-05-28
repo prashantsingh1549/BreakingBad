@@ -2,14 +2,16 @@ import {
   LIST_BAD_FAVOURITE,
   LIST_BAD_CHARACTERS,
   ADD_BAD_FAVOURITE,
+  REMOVE_FAVOURITE,
+  SEARCH_CHARACTER,
 } from '../Action/Type';
 const initialState = {
   listOfBadCharacters: [],
   listOfBadFavourite: [],
+  searchData: [],
 };
 
 const BadReducer = (state = initialState, action) => {
-  console.log(action);
   switch (action.type) {
     case LIST_BAD_CHARACTERS:
       return {
@@ -26,6 +28,18 @@ const BadReducer = (state = initialState, action) => {
       return {
         ...state,
         listOfBadFavourite: state.listOfBadFavourite.concat(action.body),
+      };
+    case REMOVE_FAVOURITE:
+      return {
+        ...state,
+        listOfBadFavourite: state.listOfBadFavourite.filter(
+          item => item != action.body,
+        ),
+      };
+    case SEARCH_CHARACTER:
+      return {
+        ...state,
+        searchData: action.body,
       };
 
     default:

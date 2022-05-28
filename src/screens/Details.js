@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, ImageBackground} from 'react-native';
 
-const Details = () => {
+const Details = ({...props}) => {
   return (
     <View>
       <Text>kjsdnskjn</Text>
