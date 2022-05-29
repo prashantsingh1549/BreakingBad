@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {
   View,
-  Text,
   TouchableOpacity,
   TextInput,
   Image,
   StatusBar,
+  StyleSheet,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
@@ -19,7 +19,6 @@ const SearchHeader = ({...props}) => {
   const [search, setSearch] = useState('');
   const [back, setBack] = useState(false);
   const navigation = useNavigation();
-  console.log(props);
   const handleSearch = async val => {
     setSearch(val);
     props.props.params = val;
@@ -27,13 +26,7 @@ const SearchHeader = ({...props}) => {
     dispatch(searchCharacter(data.data));
   };
   return (
-    <View
-      style={{
-        width: '100%',
-        height: '100%',
-        flexDirection: 'row',
-        alignItems: 'center',
-      }}>
+    <View style={styles.container}>
       <StatusBar
         animated={true}
         backgroundColor="#242424"
@@ -42,7 +35,7 @@ const SearchHeader = ({...props}) => {
       />
       {back ? (
         <TouchableOpacity
-          style={{flexDirection: 'row', alignItems: 'center'}}
+          style={styles.backbutton}
           onPress={() => {
             setSearch('');
             setBack(false);
@@ -63,7 +56,7 @@ const SearchHeader = ({...props}) => {
         placeholderTextColor={'grey'}
         onChangeText={val => handleSearch(val)}
         onPressIn={() => setBack(true)}
-        style={{fontSize: 25, width: 250, marginLeft: 40}}
+        style={styles.searchInput}
       />
       <TouchableOpacity
         onPress={() => {
@@ -77,3 +70,21 @@ const SearchHeader = ({...props}) => {
 };
 
 export default SearchHeader;
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  backbutton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  searchInput: {
+    fontSize: 25,
+    width: 250,
+    marginLeft: 40,
+  },
+});

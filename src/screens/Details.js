@@ -7,6 +7,7 @@ import {
   Dimensions,
   TouchableOpacity,
   Image,
+  StyleSheet,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 
@@ -26,7 +27,7 @@ const Details = ({navigation, ...props}) => {
   );
   const container = [{id: 1, data: character}];
   return (
-    <View style={{flex: 1, backgroundColor: '#000'}}>
+    <View style={styles.container}>
       <FlatList
         data={container}
         keyExtractor={item => item.id}
@@ -35,24 +36,11 @@ const Details = ({navigation, ...props}) => {
             <ImageBackground
               resizeMode="stretch"
               source={{uri: item.data.img}}
-              style={{
-                height: windowHeight / 1.8,
-                width: windowWidth,
-              }}>
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: 'space-between',
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginHorizontal: 15,
-                    marginTop: 15,
-                  }}>
+              style={styles.imageBackground}>
+              <View style={styles.inBackgroundImage}>
+                <View style={styles.backImageContainer}>
                   <TouchableOpacity
-                    style={{flexDirection: 'row', alignItems: 'center'}}
+                    style={styles.baackImage}
                     onPress={() => {
                       navigation.goBack();
                     }}>
@@ -68,112 +56,57 @@ const Details = ({navigation, ...props}) => {
                     <Image source={require('../assets/HEART.png')} />
                   )}
                 </View>
-                <View
-                  style={{
-                    alignItems: 'center',
-                    shadowOffset: {width: -2, height: 4},
-                    shadowColor: 'red',
-                    shadowOpacity: 0.5,
-                    shadowRadius: 5,
-                  }}>
-                  <Image
-                    source={{uri: item.data.img}}
-                    style={{
-                      width: 160,
-                      height: 200,
-                      resizeMode: 'cover',
-                      borderRadius: 5,
-                      marginBottom: 30,
-                    }}
-                  />
-                  <View style={{backgroundColor: '#000'}}>
-                    <Text
-                      style={{fontSize: 28, fontWeight: 'bold', color: '#fff'}}>
-                      {item.data.name}
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 13,
-                        color: '#fff',
-                        alignSelf: 'center',
-                      }}>
-                      {item.data.nickname}
-                    </Text>
+                <View style={styles.uperImageContainer}>
+                  <Image source={{uri: item.data.img}} style={styles.image} />
+                  <View style={styles.nameContainer}>
+                    <Text style={styles.name}>{item.data.name}</Text>
+                    <Text style={styles.nickName}>{item.data.nickname}</Text>
+                    <Text style={styles.status}>{item.data.status}</Text>
                   </View>
                 </View>
               </View>
             </ImageBackground>
-            <View style={{marginTop: 30, marginLeft: 15}}>
+            <View style={styles.secondContainer}>
               <View style={{marginVertical: 20}}>
-                <Text style={{color: '#18CA75', fontWeight: 'bold'}}>
-                  Potrayed
-                </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginRight: 10,
-                  }}>
-                  <Text style={{color: '#fff', fontSize: 13}}>
-                    {item.data.portrayed}
-                  </Text>
+                <Text style={styles.title}>Potrayed</Text>
+                <View style={styles.value}>
+                  <Text style={styles.portrayed}>{item.data.portrayed}</Text>
                   <View style={{flexDirection: 'row'}}>
-                    <Text
-                      style={{color: '#fff', fontSize: 13, marginRight: 10}}>
-                      {item.data.birthday}
-                    </Text>
+                    <Text style={styles.birthday}>{item.data.birthday}</Text>
                     <Image source={require('../assets/gift.png')} />
                   </View>
                 </View>
               </View>
               <View style={{marginVertical: 20}}>
-                <Text style={{color: '#18CA75', fontWeight: 'bold'}}>
-                  Occupation
-                </Text>
+                <Text style={styles.title}>Occupation</Text>
                 {item.data.occupation.map((item, index) => (
-                  <Text key={index} style={{color: '#fff', fontSize: 13}}>
+                  <Text key={index} style={styles.portrayed}>
                     {item}
                   </Text>
                 ))}
               </View>
               <View style={{marginVertical: 20}}>
-                <Text style={{color: '#18CA75', fontWeight: 'bold'}}>
-                  Appearance
-                </Text>
+                <Text style={styles.title}>Appearance</Text>
                 <FlatList
                   data={item.data.appearance}
                   horizontal={true}
                   keyExtractor={(item, index) => Math.random()}
                   renderItem={({item}) => (
-                    <View
-                      style={{
-                        width: 70,
-                        height: 20,
-                        borderRadius: 5,
-                        backgroundColor: '#242424',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginRight: 5,
-                        marginTop: 5,
-                      }}>
-                      <Text style={{color: '#fff', fontSize: 12}}>
-                        session {item}
-                      </Text>
+                    <View style={styles.appearanceContainer}>
+                      <Text style={styles.portrayed}>session {item}</Text>
                     </View>
                   )}
                 />
               </View>
             </View>
-            <View style={{marginTop: 30, marginLeft: 15}}>
-              <Text style={{fontSize: 26, color: '#fff'}}>
-                Other Characters
-              </Text>
+            <View style={styles.otherContainer}>
+              <Text style={styles.other}>Other Characters</Text>
               <FlatList
                 data={otherData}
                 keyExtractor={item => item.char_id}
                 horizontal={true}
                 renderItem={({item}) => (
-                  <View style={{marginHorizontal: 15, marginVertical: 30}}>
+                  <View style={styles.otherFlatlist}>
                     <TouchableOpacity
                       onPress={() =>
                         navigation.navigate('Details', {id: item.char_id})
@@ -182,21 +115,14 @@ const Details = ({navigation, ...props}) => {
                         source={{
                           uri: item.img,
                         }}
-                        style={{
-                          width: 150,
-                          height: 180,
-                          resizeMode: 'stretch',
-                          borderRadius: 5,
-                        }}
+                        style={styles.otherImage}
                       />
                     </TouchableOpacity>
                     <View
                       style={{
                         marginTop: 10,
                       }}>
-                      <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>
-                        {item.name}
-                      </Text>
+                      <Text style={styles.portrayed}>{item.name}</Text>
                       <Text style={{color: '#FFFFFF', fontSize: 12}}>
                         {item.nickname}
                       </Text>
@@ -213,3 +139,113 @@ const Details = ({navigation, ...props}) => {
 };
 
 export default Details;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+  imageBackground: {
+    height: windowHeight / 1.8,
+    width: windowWidth,
+  },
+  inBackgroundImage: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  backImageContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 15,
+    marginTop: 15,
+  },
+  baackImage: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  uperImageContainer: {
+    alignItems: 'center',
+    shadowOffset: {width: -2, height: 4},
+    shadowColor: 'red',
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+  },
+  image: {
+    width: 140,
+    height: 170,
+    resizeMode: 'contain',
+    borderRadius: 5,
+    marginBottom: 30,
+  },
+  nameContainer: {
+    backgroundColor: '#000',
+    width: windowWidth,
+    alignItems: 'center',
+    opacity: 0.7,
+  },
+  name: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  nickName: {
+    fontSize: 13,
+    color: '#fff',
+    marginVertical: 5,
+  },
+  status: {
+    fontSize: 15,
+    color: '#CA184E',
+    fontWeight: 'bold',
+  },
+  secondContainer: {
+    marginTop: 30,
+    marginLeft: 15,
+  },
+  title: {
+    color: '#18CA75',
+    fontWeight: 'bold',
+  },
+  value: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginRight: 10,
+  },
+  portrayed: {
+    color: '#fff',
+    fontSize: 13,
+  },
+  birthday: {
+    color: '#fff',
+    fontSize: 13,
+    marginRight: 10,
+  },
+  appearanceContainer: {
+    width: 90,
+    height: 25,
+    borderRadius: 5,
+    backgroundColor: '#242424',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 5,
+    marginTop: 5,
+  },
+  otherContainer: {
+    marginTop: 30,
+    marginLeft: 15,
+  },
+  other: {
+    fontSize: 26,
+    color: '#fff',
+  },
+  otherFlatlist: {
+    marginHorizontal: 15,
+    marginVertical: 30,
+  },
+  otherImage: {
+    width: 150,
+    height: 180,
+    resizeMode: 'stretch',
+    borderRadius: 5,
+  },
+});

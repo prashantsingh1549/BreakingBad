@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StatusBar,
   ActivityIndicator,
+  StyleSheet,
 } from 'react-native';
 import axios from 'axios';
 import {useSelector, useDispatch} from 'react-redux';
@@ -32,7 +33,7 @@ const BadCharacterList = ({navigation}) => {
   );
 
   return (
-    <View style={{flex: 1, backgroundColor: '#000'}}>
+    <View style={styles.container}>
       <StatusBar
         animated={true}
         backgroundColor="#000"
@@ -45,7 +46,7 @@ const BadCharacterList = ({navigation}) => {
           keyExtractor={item => item.char_id}
           numColumns={2}
           renderItem={({item}) => (
-            <View style={{marginHorizontal: 15, marginVertical: 30}}>
+            <View style={styles.flatConatiner}>
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate('Details', {id: item.char_id})
@@ -54,27 +55,13 @@ const BadCharacterList = ({navigation}) => {
                   source={{
                     uri: item.img,
                   }}
-                  style={{
-                    width: 150,
-                    height: 180,
-                    resizeMode: 'stretch',
-                    borderRadius: 5,
-                  }}
+                  style={styles.image}
                 />
               </TouchableOpacity>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginTop: 10,
-                }}>
+              <View style={styles.textContainer}>
                 <View>
-                  <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>
-                    {item.name}
-                  </Text>
-                  <Text style={{color: '#FFFFFF', fontSize: 12}}>
-                    {item.nickname}
-                  </Text>
+                  <Text style={styles.name}>{item.name}</Text>
+                  <Text style={styles.nickname}>{item.nickname}</Text>
                 </View>
                 {listOfBadFavourite.includes(item.char_id) ? (
                   <TouchableOpacity
@@ -101,3 +88,33 @@ const BadCharacterList = ({navigation}) => {
 };
 
 export default BadCharacterList;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+  flatConatiner: {
+    marginHorizontal: 15,
+    marginVertical: 30,
+  },
+  image: {
+    width: 150,
+    height: 180,
+    resizeMode: 'stretch',
+    borderRadius: 5,
+  },
+  textContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  name: {
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+  },
+  nickname: {
+    color: '#FFFFFF',
+    fontSize: 12,
+  },
+});

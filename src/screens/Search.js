@@ -1,9 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, Image, TouchableOpacity} from 'react-native';
-import axios from 'axios';
+import React from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {apiData} from './ApiEndPoint';
 import {addBadFavourite, removeFavourite} from '../redux/Action/BadAction';
 
 const Search = ({navigation, ...props}) => {
@@ -12,14 +17,14 @@ const Search = ({navigation, ...props}) => {
     state => state.BadReducer,
   );
   return (
-    <View style={{flex: 1, backgroundColor: '#000'}}>
+    <View style={styles.container}>
       {searchData.length > 0 ? (
         <FlatList
           data={searchData}
           keyExtractor={item => item.char_id}
           numColumns={2}
           renderItem={({item}) => (
-            <View style={{marginHorizontal: 15, marginVertical: 30}}>
+            <View style={styles.flatListContainer}>
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate('Details', {id: item.char_id})
@@ -28,27 +33,13 @@ const Search = ({navigation, ...props}) => {
                   source={{
                     uri: item.img,
                   }}
-                  style={{
-                    width: 150,
-                    height: 180,
-                    resizeMode: 'stretch',
-                    borderRadius: 5,
-                  }}
+                  style={styles.searchImage}
                 />
               </TouchableOpacity>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginTop: 10,
-                }}>
+              <View style={styles.nameContainer}>
                 <View>
-                  <Text style={{fontWeight: 'bold', color: '#FFFFFF'}}>
-                    {item.name}
-                  </Text>
-                  <Text style={{color: '#FFFFFF', fontSize: 12}}>
-                    {item.nickname}
-                  </Text>
+                  <Text style={styles.name}>{item.name}</Text>
+                  <Text style={styles.nickname}>{item.nickname}</Text>
                 </View>
                 {listOfBadFavourite.includes(item.char_id) ? (
                   <TouchableOpacity
@@ -67,7 +58,7 @@ const Search = ({navigation, ...props}) => {
         />
       ) : (
         props.route.params && (
-          <View style={{marginVertical: 30, marginHorizontal: 20}}>
+          <View style={styles.notFound}>
             <Text style={{color: '#18CA75', fontSize: 20}}>
               No Character found
             </Text>
@@ -80,3 +71,37 @@ const Search = ({navigation, ...props}) => {
 };
 
 export default Search;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+  flatListContainer: {
+    marginHorizontal: 15,
+    marginVertical: 30,
+  },
+  searchImage: {
+    width: 150,
+    height: 180,
+    resizeMode: 'stretch',
+    borderRadius: 5,
+  },
+  nameContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  name: {
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+  },
+  nickname: {
+    color: '#FFFFFF',
+    fontSize: 12,
+  },
+  notFound: {
+    marginVertical: 30,
+    marginHorizontal: 20,
+  },
+});

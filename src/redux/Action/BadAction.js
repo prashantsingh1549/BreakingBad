@@ -4,7 +4,6 @@ import {
   ADD_BAD_FAVOURITE,
   REMOVE_FAVOURITE,
   SEARCH_CHARACTER,
-  SEARCH_INPUT,
 } from './Type';
 
 export const listBadCharacters = body => ({
