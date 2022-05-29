@@ -44,7 +44,7 @@ const App = () => {
           name="Search"
           component={Search}
           options={({navigation, route}) => ({
-            headerTitle: props => <SearchHeader />,
+            headerTitle: props => <SearchHeader props={route} />,
             headerStyle: {
               backgroundColor: '#242424',
             },
@@ -67,7 +67,9 @@ const App = () => {
               fontSize: 25,
             },
             headerRight: props => (
-              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <TouchableOpacity
+                style={{width: 50, borderRadius: 25, marginRight: -28}}
+                onPress={() => navigation.goBack()}>
                 <Image source={require('./src/assets/crossClear.png')} />
               </TouchableOpacity>
             ),
@@ -77,6 +79,7 @@ const App = () => {
           name="Details"
           component={Details}
           options={({navigation, route}) => ({
+            headerShown: false,
             headerTitle: '',
             headerStyle: {
               backgroundColor: '#000',

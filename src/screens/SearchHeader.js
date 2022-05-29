@@ -14,14 +14,15 @@ import {useDispatch} from 'react-redux';
 import {searchCharacter} from '../redux/Action/BadAction';
 import {apiData} from './ApiEndPoint';
 
-const SearchHeader = () => {
+const SearchHeader = ({...props}) => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState('');
   const [back, setBack] = useState(false);
   const navigation = useNavigation();
-
+  console.log(props);
   const handleSearch = async val => {
     setSearch(val);
+    props.props.params = val;
     const data = await axios.get(apiData.baseUrl + apiData.search + val);
     dispatch(searchCharacter(data.data));
   };
